@@ -3,14 +3,14 @@ version: "0.1"
 summary: This is a Philips hue light control snap app 
 description: 
   This app shows how to control the philips hue bulbs
-confinement: strict
+confinement: devmode
 grade: stable
 
 apps:
   lights:
     command: lights
     # daemon: simple
-    plugs: [network-bind]
+    plugs: [network-bind, serial-port]
   mqtt:
     command: bin/server
     daemon: simple
@@ -26,6 +26,7 @@ parts:
   node:
     plugin: nodejs
     source: . 
+    node-engine: 6.9.1
 
   lightsetting:
     plugin: dump

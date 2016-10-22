@@ -23,6 +23,7 @@ SerialPort.list(function (err, ports) {
     ports.forEach(function(port) {
         if(portCount > 1)
             return;
+        console.log(port);
         if(port.comName.indexOf(portName) > 0) {
             console.log("At least one port has been found!")
             portCount++;
@@ -218,9 +219,10 @@ router.route('/lights')
 router.route('/lights/:light_id')
     .get(function(req, res) {
         console.log("going to get the status for a specific light status")
-        console.log("light_id: " + req.params.light_id)
+        var light_id = req.params.light_id
+        console.log("light_id: " + light_id)
         // We send a command to get the light status
-        host.onUserCommand("light.getPower",  '{"id":"Light1"}')
+        host.onUserCommand("light.getPower",  `{"id":"${light_id}"}`)
         res.status(200).json({message: "got the status"})
     })
     .put(function(req, res) {

@@ -20,7 +20,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "mosca": "^2.2.0",
-    "mqtt": "^2.0.1",
+    "mqtt": "^2.0.0",
     "serialport": "^4.0.3",
     "serve-favicon": "~2.3.0"
   }
