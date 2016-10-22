@@ -100,7 +100,7 @@ function initHost() {
                 "power": light.power
             }));
         // We need to publish the data so all of the terminals can update the status
-        client.publish('lightdata', JSON.stringify(light))
+        //client.publish('lightdata', JSON.stringify(light))
     });
     host.on("foundNewLight", function(light) {
         console.log("found new light: " + JSON.stringify({
@@ -155,10 +155,10 @@ function saveDevices() {
     })
 }
 
-var DEFAULT_HOST = 'localhost'
-var DEFAULT_PORT = 1883
-var mqtt = require('mqtt')
-var client = mqtt.connect({ port: DEFAULT_PORT, host: DEFAULT_HOST, keepalive: 10000});
+// var DEFAULT_HOST = 'localhost'
+// var DEFAULT_PORT = 1883
+// var mqtt = require('mqtt')
+// var client = mqtt.connect({ port: DEFAULT_PORT, host: DEFAULT_HOST, keepalive: 10000});
 
 // client.end()
 

@@ -9,11 +9,11 @@ grade: stable
 apps:
   lights:
     command: lights
-    # daemon: simple
+    daemon: simple
     plugs: [network-bind, serial-port]
   mqtt:
     command: bin/server
-    daemon: simple
+    # daemon: simple
     plugs: [network-bind]
   subscribe:
     command: bin/subscribe
