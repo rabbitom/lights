@@ -165,42 +165,32 @@ ZHAHost.prototype.onCommand = function(command, param) {
     this.sendMessage(message);
 };
 
-ZHAHost.prototype.onUserCommand = function(commandPath, paramStr) {
+ZHAHost.prototype.onUserCommand = function(commandPath, param) {
     if(commandPath.length == 0)
         return;
-    console.log(`onUserCommand ${commandPath}` + (paramStr ? (': ' + paramStr) : ''));
+    console.log("command", commandPath);
     var parts = commandPath.split(".");
     if(parts.length == 2) {
         var categoryKey = parts[0];
         var commandKey = parts[1];
-
-        // console.log("part[0] " + parts[0])
-        // console.log("part[1] " + parts[1])
-
         var category = commands[categoryKey];
-        console.log("category: " + typeof (category))
-        // dataUtils.dumpProperties(category)
-
         if(category) {
             var command = category[commandKey];
-            console.log("command　"　+ command)
-            // dataUtils.dumpProperties(command)
-
             if(command) {
-                if(paramStr) {
-                    console.log("paramStr: " + paramStr)
-                    var param;
-                    try{
-                        param = JSON.parse(paramStr);
-                    }
-                    catch(err) {
-                        console.log("parse param to JSON failed: " + err);
-                    }
-
-                    if(param)
+		if(param != null) {
+                    if(typeof param == 'string')
+                        try{
+                            param = JSON.parse(param);
+                        }
+                        catch(err) {
+                            console.log("parse param to JSON failed: " + err);
+                        }
+                    if(typeof param == 'object') {
+                        console.log("param:", param);
                         this.onCommand(command, param);
+                    }
                     else
-                        console.log("cannot parse param to JSON");
+                        console.log("cannot parse param");
                 }
                 else
                     this.onCommand(command);

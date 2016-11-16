@@ -54,15 +54,22 @@ function onPortOpen(error) {
         console.log('serial port opened!');
         hostPort.on('data', onPortReceive);
         initHost();
-
-        setInterval(function(){
-            // client.publish('lightdata', 'nice')
-            // Trying to get the light status
-            host.onUserCommand("light.hueSaturation", `{"id":"Light1","hue":${iHue},"saturation":254,"duration":2}`)
-            host.onUserCommand("light.hueSaturation", `{"id":"Light2","hue":${(iHue+85)%255},"saturation":254,"duration":2}`)
-            host.onUserCommand("light.hueSaturation", `{"id":"Light3","hue":${(iHue+170)%255},"saturation":254,"duration":2}`)
-            iHue = (iHue + 10) % 255;
-        }, 2 * 1000);
+//<<<<<<< HEAD
+//        setInterval(function(){
+//            // client.publish('lightdata', 'nice')
+//            // Trying to get the light status
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light1","hue":${iHue},"saturation":254,"duration":2}`)
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light2","hue":${(iHue+85)%255},"saturation":254,"duration":2}`)
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light3","hue":${(iHue+170)%255},"saturation":254,"duration":2}`)
+//            iHue = (iHue + 10) % 255;
+//        }, 2 * 1000);
+//=======
+////        setInterval(function(){
+////            // client.publish('lightdata', 'nice')
+////            // Trying to get the light status
+////            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
+////        }, 5 * 1000);
+//>>>>>>> 191a7b31f9d2e8b72a15dec14ac751858dbc845d
     }
 }
 
@@ -290,7 +297,17 @@ router.route('/colors/:light_id')
         res.status(200).json( { message: "OK"})
     });
 
-
+router.route('/command/:category/:command')
+	.get(function(req, res) {
+		var commandPath = `${req.params.category}.${req.params.command}`;
+		host.onUserCommand(commandPath);
+		res.status(200).json({message: "OK"});
+	})
+	.post(function(req, res) {
+		var commandPath = `${req.params.category}.${req.params.command}`;
+		host.onUserCommand(commandPath, req.body);
+		res.status(200).json({message: "OK"});
+	});
 
 app.use('/api', router);
 
