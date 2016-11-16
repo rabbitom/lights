@@ -53,11 +53,11 @@ function onPortOpen(error) {
         hostPort.on('data', onPortReceive);
         initHost();
 
-        setInterval(function(){
-            // client.publish('lightdata', 'nice')
-            // Trying to get the light status
-            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
-        }, 5 * 1000);
+//        setInterval(function(){
+//            // client.publish('lightdata', 'nice')
+//            // Trying to get the light status
+//            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
+//        }, 5 * 1000);
     }
 }
 
@@ -285,7 +285,17 @@ router.route('/colors/:light_id')
         res.status(200).json( { message: "OK"})
     });
 
-
+router.route('/command/:category/:command')
+	.get(function(req, res) {
+		var commandPath = `${req.params.category}.${req.params.command}`;
+		host.onUserCommand(commandPath);
+		res.status(200).json({message: "OK"});
+	})
+	.post(function(req, res) {
+		var commandPath = `${req.params.category}.${req.params.command}`;
+		host.onUserCommand(commandPath, req.body);
+		res.status(200).json({message: "OK"});
+	});
 
 app.use('/api', router);
 
