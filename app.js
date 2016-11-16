@@ -43,6 +43,8 @@ function onPortFound(port) {
     }, onPortOpen);
 }
 
+var iHue = 0;
+
 function onPortOpen(error) {
     if( error != null ) {
         console.log('open serial port failed: ' + error);
@@ -56,8 +58,11 @@ function onPortOpen(error) {
         setInterval(function(){
             // client.publish('lightdata', 'nice')
             // Trying to get the light status
-            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
-        }, 5 * 1000);
+            host.onUserCommand("light.hueSaturation", `{"id":"Light1","hue":${iHue},"saturation":254,"duration":2}`)
+            host.onUserCommand("light.hueSaturation", `{"id":"Light2","hue":${(iHue+85)%255},"saturation":254,"duration":2}`)
+            host.onUserCommand("light.hueSaturation", `{"id":"Light3","hue":${(iHue+170)%255},"saturation":254,"duration":2}`)
+            iHue = (iHue + 10) % 255;
+        }, 2 * 1000);
     }
 }
 
