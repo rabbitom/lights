@@ -43,6 +43,8 @@ function onPortFound(port) {
     }, onPortOpen);
 }
 
+var iHue = 0;
+
 function onPortOpen(error) {
     if( error != null ) {
         console.log('open serial port failed: ' + error);
@@ -52,12 +54,22 @@ function onPortOpen(error) {
         console.log('serial port opened!');
         hostPort.on('data', onPortReceive);
         initHost();
-
+//<<<<<<< HEAD
 //        setInterval(function(){
 //            // client.publish('lightdata', 'nice')
 //            // Trying to get the light status
-//            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
-//        }, 5 * 1000);
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light1","hue":${iHue},"saturation":254,"duration":2}`)
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light2","hue":${(iHue+85)%255},"saturation":254,"duration":2}`)
+//            host.onUserCommand("light.hueSaturation", `{"id":"Light3","hue":${(iHue+170)%255},"saturation":254,"duration":2}`)
+//            iHue = (iHue + 10) % 255;
+//        }, 2 * 1000);
+//=======
+////        setInterval(function(){
+////            // client.publish('lightdata', 'nice')
+////            // Trying to get the light status
+////            host.onUserCommand("light.getPower",  '{"id":"Light1"}')
+////        }, 5 * 1000);
+//>>>>>>> 191a7b31f9d2e8b72a15dec14ac751858dbc845d
     }
 }
 
