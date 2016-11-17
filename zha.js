@@ -151,7 +151,7 @@ ZHAHost.prototype.onCommand = function(command, param) {
             return;
         }
     }
-    else if(categoryKey == "light")
+    else if((categoryKey == "light") || (command == commands.ha.blink))
         this.buildLightMessage(message, param);
         
     if(command.data.send)
