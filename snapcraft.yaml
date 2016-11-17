@@ -1,5 +1,5 @@
 name: lights
-version: "0.1"
+version: "0.1.2"
 summary: This is a Philips hue light control snap app 
 description: 
   This app shows how to control the philips hue bulbs
